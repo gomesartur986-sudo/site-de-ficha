@@ -13,10 +13,10 @@
       background: radial-gradient(circle at 20% 20%, #0b0b0d 0%, #050506 70%, #000 100%);
       color: #d9d9d9;
       display: flex;
-      height: 100vh;
+      flex-direction: row;
+      min-height: 100vh;
       overflow: hidden;
       position: relative;
-      flex-direction: row;
     }
 
     body::before {
@@ -42,6 +42,7 @@
       padding-top: 25px;
       box-shadow: 2px 0 15px rgba(50,0,50,0.3);
       z-index: 10;
+      flex-shrink: 0;
     }
 
     nav h1 {
@@ -90,7 +91,7 @@
 
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 14px;
       font-weight: bold;
       color: #a76bcf;
       text-shadow: 0 0 5px #3d0057;
@@ -98,13 +99,14 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 5px;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 6px;
       border: 1px solid #2b2b2b;
       background-color: #0f0f11;
       color: #e6e6e6;
       transition: all 0.3s ease;
+      font-size: 1em;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -117,21 +119,22 @@
 
     .atributos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 15px;
     }
 
     button.save {
       background: linear-gradient(90deg, #4a006e, #6a1b9a);
       color: #fff;
       border: none;
-      padding: 10px 15px;
-      margin-top: 20px;
-      border-radius: 5px;
+      padding: 12px 18px;
+      margin-top: 24px;
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.3s ease;
       font-weight: bold;
       box-shadow: 0 0 10px rgba(106,27,154,0.4);
+      width: 100%;
     }
 
     button.save:hover {
@@ -146,7 +149,7 @@
       text-align: center;
       font-size: 0.9em;
       color: #777;
-      margin-top: 40px;
+      margin-top: 50px;
       opacity: 0.6;
     }
 
@@ -165,39 +168,36 @@
       background: #3b003b;
       border-radius: 4px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #6a1b9a;
-    }
+    ::-webkit-scrollbar-thumb:hover { background: #6a1b9a; }
 
-    /* 📱 MODO CELULAR */
+    /* 📱 CELULAR CONFORTÁVEL */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
+        overflow: visible;
       }
 
       nav {
         width: 100%;
-        height: auto;
         flex-direction: row;
         overflow-x: auto;
         border-right: none;
         border-bottom: 2px solid #3b003b;
         box-shadow: 0 2px 15px rgba(50,0,50,0.3);
-        padding: 10px 0;
+        padding: 8px 5px;
         justify-content: space-around;
       }
 
-      nav h1 {
-        display: none;
-      }
+      nav h1 { display: none; }
 
       nav button {
         flex: 1;
-        padding: 10px 5px;
-        font-size: 0.9em;
+        padding: 12px 8px;
+        font-size: 1em;
         text-align: center;
         border-left: none;
         border-bottom: 3px solid transparent;
+        white-space: nowrap;
       }
 
       nav button:hover, nav button.active {
@@ -208,10 +208,21 @@
 
       main {
         padding: 20px;
+        overflow-y: visible;
+        min-height: 100vh;
       }
 
       h2 {
-        font-size: 1.2em;
+        font-size: 1.3em;
+      }
+
+      input, select, textarea {
+        font-size: 1.1em;
+        padding: 12px;
+      }
+
+      button.save {
+        font-size: 1.1em;
       }
     }
   </style>
@@ -233,60 +244,50 @@
       <label>Origem</label>
       <select id="origem">
         <option value="">Selecione...</option>
-        <option>Acadêmico</option><option>Agente de Saúde</option><option>Artista</option>
-        <option>Criminoso</option><option>Cultista Arrependido</option><option>Desgarrado</option>
-        <option>Militar</option><option>Ocupante</option><option>Policial</option>
-        <option>Religioso</option><option>Servidor Público</option><option>Trabalhador</option>
+        <option>Acadêmico</option><option>Militar</option><option>Trabalhador</option>
       </select>
-
       <label>Classe</label>
       <select id="classe">
-        <option value="">Selecione...</option>
-        <option>Combatente</option>
-        <option>Especialista</option>
-        <option>Ocultista</option>
+        <option>Combatente</option><option>Especialista</option><option>Ocultista</option>
       </select>
-
       <label>NEX</label>
       <select id="nex">
-        <option value="">Selecione...</option>
         <option>5%</option><option>10%</option><option>20%</option><option>35%</option>
         <option>50%</option><option>65%</option><option>80%</option><option>95%</option>
       </select>
-
       <label>Vida</label>
-      <input type="number" id="vida" min="0">
+      <input type="number" id="vida">
       <label>Sanidade</label>
-      <input type="number" id="sanidade" min="0">
-      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
+      <input type="number" id="sanidade">
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
     </section>
 
     <section id="atributos" class="tab-content hidden">
       <h2>Atributos</h2>
       <div class="atributos-grid">
-        <div><label>Força</label><input type="number" id="forca" min="-5" max="5" value="0"></div>
-        <div><label>Agilidade</label><input type="number" id="agilidade" min="-5" max="5" value="0"></div>
-        <div><label>Intelecto</label><input type="number" id="intelecto" min="-5" max="5" value="0"></div>
-        <div><label>Presença</label><input type="number" id="presenca" min="-5" max="5" value="0"></div>
-        <div><label>Vigor</label><input type="number" id="vigor" min="-5" max="5" value="0"></div>
+        <div><label>Força</label><input type="number" id="forca" value="0"></div>
+        <div><label>Agilidade</label><input type="number" id="agilidade" value="0"></div>
+        <div><label>Intelecto</label><input type="number" id="intelecto" value="0"></div>
+        <div><label>Presença</label><input type="number" id="presenca" value="0"></div>
+        <div><label>Vigor</label><input type="number" id="vigor" value="0"></div>
       </div>
-      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
     </section>
 
     <section id="inventario" class="tab-content hidden">
       <h2>Inventário</h2>
-      <textarea id="itens" rows="6" placeholder="Armas, armaduras, equipamentos..."></textarea>
+      <textarea id="itens" rows="6"></textarea>
       <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="anotacoes" class="tab-content hidden">
       <h2>Anotações</h2>
-      <textarea id="habilidades" rows="10" placeholder="Habilidades, observações..."></textarea>
+      <textarea id="habilidades" rows="10"></textarea>
       <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="historia" class="tab-content hidden">
-      <h2>História</h2>
+      <h2>História & Personalidade</h2>
       <label>Aparência</label>
       <textarea id="aparencia" rows="3"></textarea>
       <label>História com o Paranormal</label>
@@ -302,14 +303,12 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const campos = ["nome","origem","classe","nex","vida","sanidade","forca","agilidade","intelecto","presenca","vigor","itens","habilidades","aparencia","historiaParanormal","personalidade"];
-
       function salvarFicha() {
         const ficha = {};
         campos.forEach(id => ficha[id] = document.getElementById(id).value);
         localStorage.setItem("fichaRPG", JSON.stringify(ficha));
         alert("Ficha salva!");
       }
-
       function carregarFicha() {
         const fichaSalva = localStorage.getItem("fichaRPG");
         if (fichaSalva) {
@@ -320,10 +319,8 @@
           });
         }
       }
-
       const botoes = document.querySelectorAll(".tab-btn");
       const secoes = document.querySelectorAll(".tab-content");
-
       botoes.forEach(btn => {
         btn.addEventListener("click", () => {
           botoes.forEach(b => b.classList.remove("active"));
@@ -332,11 +329,9 @@
           document.getElementById(btn.dataset.tab).classList.remove("hidden");
         });
       });
-
       carregarFicha();
       window.salvarFicha = salvarFicha;
     });
   </script>
 </body>
 </html>
-
