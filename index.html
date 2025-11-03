@@ -1,8 +1,8 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ficha de RPG - Ordem Paranormal</title>
   <style>
     * { box-sizing: border-box; }
@@ -13,10 +13,10 @@
       background: radial-gradient(circle at 20% 20%, #0b0b0d 0%, #050506 70%, #000 100%);
       color: #d9d9d9;
       display: flex;
-      flex-direction: row;
       height: 100vh;
       overflow: hidden;
       position: relative;
+      flex-direction: row;
     }
 
     body::before {
@@ -26,7 +26,6 @@
       background: radial-gradient(circle at 50% 50%, rgba(100,0,150,0.08) 0%, transparent 80%);
       opacity: 0.05;
       animation: nevoa 80s linear infinite;
-      z-index: 0;
     }
 
     @keyframes nevoa {
@@ -42,7 +41,7 @@
       flex-direction: column;
       padding-top: 25px;
       box-shadow: 2px 0 15px rgba(50,0,50,0.3);
-      z-index: 5;
+      z-index: 10;
     }
 
     nav h1 {
@@ -79,7 +78,6 @@
       overflow-y: auto;
       background: radial-gradient(circle at center, rgba(25,0,40,0.2), rgba(0,0,0,0.9));
       position: relative;
-      z-index: 1;
     }
 
     h2 {
@@ -100,13 +98,12 @@
 
     input, select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 5px;
       border-radius: 5px;
       border: 1px solid #2b2b2b;
       background-color: #0f0f11;
       color: #e6e6e6;
-      font-size: 1em;
       transition: all 0.3s ease;
     }
 
@@ -135,7 +132,6 @@
       transition: all 0.3s ease;
       font-weight: bold;
       box-shadow: 0 0 10px rgba(106,27,154,0.4);
-      width: 100%;
     }
 
     button.save:hover {
@@ -173,24 +169,22 @@
       background: #6a1b9a;
     }
 
-    /* ======== 🔹 RESPONSIVIDADE 🔹 ======== */
+    /* 📱 MODO CELULAR */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
-        height: auto;
-        overflow: auto;
       }
 
       nav {
         width: 100%;
+        height: auto;
         flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
+        overflow-x: auto;
         border-right: none;
         border-bottom: 2px solid #3b003b;
+        box-shadow: 0 2px 15px rgba(50,0,50,0.3);
         padding: 10px 0;
-        position: sticky;
-        top: 0;
+        justify-content: space-around;
       }
 
       nav h1 {
@@ -200,29 +194,24 @@
       nav button {
         flex: 1;
         padding: 10px 5px;
-        font-size: 1.2em;
+        font-size: 0.9em;
         text-align: center;
         border-left: none;
         border-bottom: 3px solid transparent;
       }
 
       nav button:hover, nav button.active {
-        background-color: transparent;
         border-bottom: 3px solid #6a1b9a;
+        background: none;
         text-shadow: 0 0 6px #6a1b9a;
       }
 
       main {
         padding: 20px;
-        height: auto;
       }
 
-      input, select, textarea {
-        font-size: 1.1em;
-      }
-
-      .atributos-grid {
-        grid-template-columns: repeat(2, 1fr);
+      h2 {
+        font-size: 1.2em;
       }
     }
   </style>
@@ -244,18 +233,10 @@
       <label>Origem</label>
       <select id="origem">
         <option value="">Selecione...</option>
-        <option>Acadêmico</option>
-        <option>Agente de Saúde</option>
-        <option>Artista</option>
-        <option>Criminoso</option>
-        <option>Cultista Arrependido</option>
-        <option>Desgarrado</option>
-        <option>Militar</option>
-        <option>Ocupante</option>
-        <option>Policial</option>
-        <option>Religioso</option>
-        <option>Servidor Público</option>
-        <option>Trabalhador</option>
+        <option>Acadêmico</option><option>Agente de Saúde</option><option>Artista</option>
+        <option>Criminoso</option><option>Cultista Arrependido</option><option>Desgarrado</option>
+        <option>Militar</option><option>Ocupante</option><option>Policial</option>
+        <option>Religioso</option><option>Servidor Público</option><option>Trabalhador</option>
       </select>
 
       <label>Classe</label>
@@ -269,23 +250,15 @@
       <label>NEX</label>
       <select id="nex">
         <option value="">Selecione...</option>
-        <option>5%</option>
-        <option>10%</option>
-        <option>20%</option>
-        <option>35%</option>
-        <option>50%</option>
-        <option>65%</option>
-        <option>80%</option>
-        <option>95%</option>
+        <option>5%</option><option>10%</option><option>20%</option><option>35%</option>
+        <option>50%</option><option>65%</option><option>80%</option><option>95%</option>
       </select>
 
       <label>Vida</label>
       <input type="number" id="vida" min="0">
-
       <label>Sanidade</label>
       <input type="number" id="sanidade" min="0">
-
-      <button class="save">💾 Salvar</button>
+      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="atributos" class="tab-content hidden">
@@ -297,30 +270,30 @@
         <div><label>Presença</label><input type="number" id="presenca" min="-5" max="5" value="0"></div>
         <div><label>Vigor</label><input type="number" id="vigor" min="-5" max="5" value="0"></div>
       </div>
-      <button class="save">💾 Salvar</button>
+      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="inventario" class="tab-content hidden">
       <h2>Inventário</h2>
       <textarea id="itens" rows="6" placeholder="Armas, armaduras, equipamentos..."></textarea>
-      <button class="save">💾 Salvar</button>
+      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="anotacoes" class="tab-content hidden">
       <h2>Anotações</h2>
-      <textarea id="habilidades" rows="10" placeholder="Anotações gerais, poderes e observações..."></textarea>
-      <button class="save">💾 Salvar</button>
+      <textarea id="habilidades" rows="10" placeholder="Habilidades, observações..."></textarea>
+      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <section id="historia" class="tab-content hidden">
-      <h2>História & Personalidade</h2>
+      <h2>História</h2>
       <label>Aparência</label>
-      <textarea id="aparencia" rows="3" placeholder="Como seu personagem se parece..."></textarea>
+      <textarea id="aparencia" rows="3"></textarea>
       <label>História com o Paranormal</label>
-      <textarea id="historiaParanormal" rows="4" placeholder="Experiências com o paranormal..."></textarea>
+      <textarea id="historiaParanormal" rows="4"></textarea>
       <label>Personalidade</label>
-      <textarea id="personalidade" rows="4" placeholder="Traços de personalidade, medos, motivações..."></textarea>
-      <button class="save">💾 Salvar</button>
+      <textarea id="personalidade" rows="4"></textarea>
+      <button class="save" onclick="salvarFicha()">💾 Salvar</button>
     </section>
 
     <footer>☽ Ordem Paranormal – Ficha Local © 2025 ☾</footer>
@@ -328,11 +301,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const campos = [
-        "nome","origem","classe","nex","vida","sanidade",
-        "forca","agilidade","intelecto","presenca","vigor",
-        "itens","habilidades","aparencia","historiaParanormal","personalidade"
-      ];
+      const campos = ["nome","origem","classe","nex","vida","sanidade","forca","agilidade","intelecto","presenca","vigor","itens","habilidades","aparencia","historiaParanormal","personalidade"];
 
       function salvarFicha() {
         const ficha = {};
@@ -352,8 +321,6 @@
         }
       }
 
-      document.querySelectorAll("button.save").forEach(b => b.addEventListener("click", salvarFicha));
-
       const botoes = document.querySelectorAll(".tab-btn");
       const secoes = document.querySelectorAll(".tab-content");
 
@@ -363,12 +330,13 @@
           btn.classList.add("active");
           secoes.forEach(sec => sec.classList.add("hidden"));
           document.getElementById(btn.dataset.tab).classList.remove("hidden");
-          window.scrollTo({ top: 0, behavior: "smooth" });
         });
       });
 
       carregarFicha();
+      window.salvarFicha = salvarFicha;
     });
   </script>
 </body>
 </html>
+
