@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de RPG - Ordem Paranormal</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 20% 20%, #0b0b0d 0%, #050506 70%, #000 100%);
+      color: #d9d9d9;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(100,0,150,0.08) 0%, transparent 80%);
+      opacity: 0.05;
+      animation: nevoa 80s linear infinite;
+    }
+
+    @keyframes nevoa {
+      from { transform: translate(0,0) scale(1); }
+      to { transform: translate(-15%, -15%) scale(1.2); }
+    }
+
+    nav {
+      width: 240px;
+      background: linear-gradient(180deg, #070708, #111);
+      border-right: 2px solid #3b003b;
+      display: flex;
+      flex-direction: column;
+      padding-top: 25px;
+      box-shadow: 2px 0 15px rgba(50,0,50,0.3);
+      z-index: 10;
+    }
+
+    nav h1 {
+      text-align: center;
+      font-size: 1.3em;
+      color: #a45ba7;
+      text-shadow: 0 0 10px #4c006d;
+      margin-bottom: 25px;
+      letter-spacing: 2px;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #999;
+      text-align: left;
+      padding: 15px 25px;
+      font-size: 1em;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    nav button:hover, nav button.active {
+      background-color: #141016;
+      color: #d9d9d9;
+      border-left: 4px solid #6a1b9a;
+      text-shadow: 0 0 6px #6a1b9a;
+    }
+
+    main {
+      flex: 1;
+      padding: 30px 40px;
+      overflow-y: auto;
+      background: radial-gradient(circle at center, rgba(25,0,40,0.2), rgba(0,0,0,0.9));
+      position: relative;
+    }
+
+    h2 {
+      color: #b67cd1;
+      border-bottom: 1px solid #4a006e;
+      padding-bottom: 6px;
+      text-shadow: 0 0 8px #4a006e;
+      letter-spacing: 0.5px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #a76bcf;
+      text-shadow: 0 0 5px #3d0057;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #2b2b2b;
+      background-color: #0f0f11;
+      color: #e6e6e6;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #6a1b9a;
+      box-shadow: 0 0 8px #6a1b9a;
+      outline: none;
+    }
+
+    textarea { resize: vertical; }
+
+    .atributos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    button.save {
+      background: linear-gradient(90deg, #4a006e, #6a1b9a);
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(106,27,154,0.4);
+    }
+
+    button.save:hover {
+      background: linear-gradient(90deg, #6a1b9a, #9c27b0);
+      box-shadow: 0 0 15px #9c27b0;
+      transform: scale(1.03);
+    }
+
+    .hidden { display: none; }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      margin-top: 40px;
+      opacity: 0.6;
+    }
+
+    footer::before {
+      content: "";
+      display: block;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #6a1b9a, transparent);
+      margin: 0 auto 10px auto;
+      opacity: 0.6;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb {
+      background: #3b003b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>☽ A ORDEM ☾</h1>
+    <button class="tab-btn active" data-tab="personagem">🧍 Personagem</button>
+    <button class="tab-btn" data-tab="atributos">⚔️ Atributos</button>
+    <button class="tab-btn" data-tab="inventario">🎒 Inventário</button>
+    <button class="tab-btn" data-tab="anotacoes">🧾 Anotações</button>
+    <button class="tab-btn" data-tab="historia">📖 História & Personalidade</button>
+  </nav>
+
+  <main>
+    <section id="personagem" class="tab-content">
+      <h2>Informações do Personagem</h2>
+      <label>Nome</label>
+      <input type="text" id="nome">
+
+      <label>Origem</label>
+      <select id="origem">
+        <option value="">Selecione...</option>
+        <option>Acadêmico</option>
+        <option>Agente de Saúde</option>
+        <option>Artista</option>
+        <option>Criminoso</option>
+        <option>Cultista Arrependido</option>
+        <option>Desgarrado</option>
+        <option>Militar</option>
+        <option>Ocupante</option>
+        <option>Policial</option>
+        <option>Religioso</option>
+        <option>Servidor Público</option>
+        <option>Trabalhador</option>
+      </select>
+
+      <label>Classe</label>
+      <select id="classe">
+        <option value="">Selecione...</option>
+        <option>Combatente</option>
+        <option>Especialista</option>
+        <option>Ocultista</option>
+      </select>
+
+      <label>NEX</label>
+      <select id="nex">
+        <option value="">Selecione...</option>
+        <option>5%</option>
+        <option>10%</option>
+        <option>20%</option>
+        <option>35%</option>
+        <option>50%</option>
+        <option>65%</option>
+        <option>80%</option>
+        <option>95%</option>
+      </select>
+
+      <label>Vida</label>
+      <input type="number" id="vida" min="0">
+
+      <label>Sanidade</label>
+      <input type="number" id="sanidade" min="0">
+
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+    </section>
+
+    <section id="atributos" class="tab-content hidden">
+      <h2>Atributos</h2>
+      <div class="atributos-grid">
+        <div><label>Força</label><input type="number" id="forca" min="-5" max="5" value="0"></div>
+        <div><label>Agilidade</label><input type="number" id="agilidade" min="-5" max="5" value="0"></div>
+        <div><label>Intelecto</label><input type="number" id="intelecto" min="-5" max="5" value="0"></div>
+        <div><label>Presença</label><input type="number" id="presenca" min="-5" max="5" value="0"></div>
+        <div><label>Vigor</label><input type="number" id="vigor" min="-5" max="5" value="0"></div>
+      </div>
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+    </section>
+
+    <section id="inventario" class="tab-content hidden">
+      <h2>Itens e Equipamentos</h2>
+      <textarea id="itens" rows="6" placeholder="Armas, armaduras, equipamentos..."></textarea>
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+    </section>
+
+    <section id="anotacoes" class="tab-content hidden">
+      <h2>Anotações / Habilidades</h2>
+      <textarea id="habilidades" rows="10" placeholder="Anotações gerais, poderes e observações..."></textarea>
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+    </section>
+
+    <section id="historia" class="tab-content hidden">
+      <h2>História & Personalidade</h2>
+
+      <label>Aparência</label>
+      <textarea id="aparencia" rows="3" placeholder="Como seu personagem se parece..."></textarea>
+
+      <label>História com o Paranormal</label>
+      <textarea id="historiaParanormal" rows="4" placeholder="Experiências ou encontros com o paranormal..."></textarea>
+
+      <label>Personalidade</label>
+      <textarea id="personalidade" rows="4" placeholder="Traços de personalidade, medos, motivações..."></textarea>
+
+      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+    </section>
+
+    <footer>☽ Ordem Paranormal – Ficha Local © 2025 ☾</footer>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const campos = [
+        "nome","origem","classe","nex","vida","sanidade",
+        "forca","agilidade","intelecto","presenca","vigor",
+        "itens","habilidades",
+        "aparencia","historiaParanormal","personalidade"
+      ];
+
+      function salvarFicha() {
+        const ficha = {};
+        campos.forEach(id => ficha[id] = document.getElementById(id).value);
+        localStorage.setItem("fichaRPG", JSON.stringify(ficha));
+        alert("Ficha salva com sucesso!");
+      }
+
+      function carregarFicha() {
+        const fichaSalva = localStorage.getItem("fichaRPG");
+        if (fichaSalva) {
+          const ficha = JSON.parse(fichaSalva);
+          campos.forEach(id => {
+            if (ficha[id] !== undefined)
+              document.getElementById(id).value = ficha[id];
+          });
+        }
+      }
+
+      const botoes = document.querySelectorAll(".tab-btn");
+      const secoes = document.querySelectorAll(".tab-content");
+
+      botoes.forEach(btn => {
+        btn.addEventListener("click", () => {
+          botoes.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          secoes.forEach(sec => sec.classList.add("hidden"));
+          document.getElementById(btn.dataset.tab).classList.remove("hidden");
+        });
+      });
+
+      carregarFicha();
+      window.salvarFicha = salvarFicha;
+    });
+  </script>
+</body>
+</html>
