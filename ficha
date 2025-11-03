@@ -229,7 +229,7 @@
       <label>Sanidade</label>
       <input type="number" id="sanidade" min="0">
 
-      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+      <button class="save" id="btnSalvar1">💾 Salvar Ficha</button>
     </section>
 
     <section id="atributos" class="tab-content hidden">
@@ -241,19 +241,19 @@
         <div><label>Presença</label><input type="number" id="presenca" min="-5" max="5" value="0"></div>
         <div><label>Vigor</label><input type="number" id="vigor" min="-5" max="5" value="0"></div>
       </div>
-      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+      <button class="save" id="btnSalvar2">💾 Salvar Ficha</button>
     </section>
 
     <section id="inventario" class="tab-content hidden">
       <h2>Itens e Equipamentos</h2>
       <textarea id="itens" rows="6" placeholder="Armas, armaduras, equipamentos..."></textarea>
-      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+      <button class="save" id="btnSalvar3">💾 Salvar Ficha</button>
     </section>
 
     <section id="anotacoes" class="tab-content hidden">
       <h2>Anotações / Habilidades</h2>
       <textarea id="habilidades" rows="10" placeholder="Anotações gerais, poderes e observações..."></textarea>
-      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+      <button class="save" id="btnSalvar4">💾 Salvar Ficha</button>
     </section>
 
     <section id="historia" class="tab-content hidden">
@@ -268,7 +268,7 @@
       <label>Personalidade</label>
       <textarea id="personalidade" rows="4" placeholder="Traços de personalidade, medos, motivações..."></textarea>
 
-      <button class="save" onclick="salvarFicha()">💾 Salvar Ficha</button>
+      <button class="save" id="btnSalvar5">💾 Salvar Ficha</button>
     </section>
 
     <footer>☽ Ordem Paranormal – Ficha Local © 2025 ☾</footer>
@@ -287,7 +287,7 @@
         const ficha = {};
         campos.forEach(id => ficha[id] = document.getElementById(id).value);
         localStorage.setItem("fichaRPG", JSON.stringify(ficha));
-        alert("Ficha salva com sucesso!");
+        console.log("Ficha salva com sucesso!");
       }
 
       function carregarFicha() {
@@ -313,8 +313,12 @@
         });
       });
 
+      // Vários botões "Salvar" chamam a mesma função
+      document.querySelectorAll("button.save").forEach(btn => {
+        btn.addEventListener("click", salvarFicha);
+      });
+
       carregarFicha();
-      window.salvarFicha = salvarFicha;
     });
   </script>
 </body>
